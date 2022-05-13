@@ -18,11 +18,12 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_spawnTime -= Time.deltaTime;
         if (m_isGameOver)
         {
+            m_spawnTime = 0;
             return;
         }
-        m_spawnTime -= Time.deltaTime;
         if (m_spawnTime <= 0)
         {
             SpawnAnimal();
