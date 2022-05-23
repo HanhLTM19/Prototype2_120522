@@ -4,41 +4,42 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public float spawnTime;
-    float m_spawnTime;
-
+    public int m_score = 0;
+    public int m_lives = 3;
     bool m_isGameOver;
-    public GameObject[] animalsPrefabs;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
-        m_spawnTime = 0;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_spawnTime -= Time.deltaTime;
-        if (m_isGameOver)
+        if (IsGameOver())
         {
-            m_spawnTime = 0;
             return;
-        }
-        if (m_spawnTime <= 0)
-        {
-            SpawnAnimal();
-            m_spawnTime = spawnTime;
-        }
+        }    
     }
-    public void SpawnAnimal()
+    public void UpdateScore(int score)
     {
-        int animalIndex = Random.Range(0, animalsPrefabs.Length);
-        Vector3 spawnPosition = new Vector3 (Random.Range(-20, 25), 0, 30);
-        Instantiate(animalsPrefabs[animalIndex], spawnPosition,
-                animalsPrefabs[animalIndex].transform.rotation);
+        m_score += score;
     }
-
-
+    public void UpdateLives()
+    {
+        if (m_lives > 1)
+        {
+            m_lives = m_lives - 1;
+            
+        }
+        else
+        {
+            m_lives = 0;
+            SetIsGameOver(true);
+        }
+    }
     public void SetIsGameOver(bool state)
     {
         m_isGameOver = state;
